@@ -1,0 +1,48 @@
+@model IEnumerable<MvcWithSQLite.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Lista de Usuarios";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Lista de Usuarios</h2>
+
+    <!-- Botón para agregar un nuevo usuario -->
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-person-plus-fill"></i> Agregar Nuevo Usuario
+        </a>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model)
+            {
+                <tr>
+                    <td>@usuario.Nombre</td>
+                    <td>@usuario.Email</td>
+                    <td class="text-center">
+                        <!-- Botón para editar -->
+                        <a asp-action="Edit" asp-route-id="@usuario.Id" class="btn btn-primary btn-sm me-1" title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+
+                        <!-- Botón para eliminar -->
+                        <form asp-action="Delete" asp-route-id="@usuario.Id" method="post" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+                            <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
